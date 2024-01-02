@@ -1,0 +1,46 @@
+import React, { useState } from 'react';
+import './App.css';
+
+function App() {
+  const [username, setUsername] = useState('');
+  const [age, setAge] = useState('');
+  const [displayData, setDisplayData] = useState(null);
+  const [errorMessage, setErrorMessage] = useState('');
+
+  const handleInputChange = (event) => {
+    const { name, value } = event.target;
+    name === 'username' ? setUsername(value) : setAge(value);
+    setErrorMessage('');
+  };
+
+  const handleSubmit = () => {
+    if (username.trim() === '' || age === '' || age < 0) {
+      setErrorMessage('Please enter valid values.');
+    } else {
+      const newData = `Username: ${username}, Age: ${age}`;
+      setDisplayData(newData);
+      setErrorMessage('');
+    }
+  };
+
+  return (
+    <div className="App">
+      <h1>User Form</h1>
+      <label>
+        Username:
+        <input type="text" name="username" value={username} onChange={handleInputChange} />
+      </label>
+      <br />
+      <label>
+        Age:
+        <input type="number" name="age" value={age} onChange={handleInputChange} />
+      </label>
+      <br />
+      <button onClick={handleSubmit}>Submit</button>
+      <p style={{ color: 'red' }}>{errorMessage}</p>
+      {displayData && <p>{displayData}</p>}
+    </div>
+  );
+}
+
+export default App;
